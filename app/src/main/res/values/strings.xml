@@ -4,4 +4,7 @@
     <string name="zero">0</string>
     <string name="inc">+</string>
     <string name="my_counter">My Counter</string>
+    <string name="open_main_activity_button_label">open main activity</string>
+    <string name="explicit_intent_heading">Explicit Intent</string>
+    <string name="implicit_intent_heading">Implicit Intent</string>
 </resources>
