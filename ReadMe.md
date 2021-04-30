@@ -1,6 +1,7 @@
 # Intents Playground
 
-I have made an Intent based application to do some intent based functions.
+I have made an Intent based application to do some intent based functions.<br>
+Download [APK](https://github.com/imAtulSharma/Counter-App/releases/download/v1.0/app-debug.apk) for the application.
 
 ## Features in the application
 
