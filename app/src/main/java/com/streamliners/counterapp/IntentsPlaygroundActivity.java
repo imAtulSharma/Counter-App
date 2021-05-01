@@ -118,7 +118,13 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
             return;
         }
 
-        int initialCount = Integer.parseInt(input);
+        int initialCount;
+        try {
+            initialCount = Integer.parseInt(input);
+        } catch (Exception e) {
+            b.initialCounterEditText.setError("Please enter integer!");
+            return;
+        }
 
         Bundle bundle = new Bundle();
         bundle.putInt(Constants.INITIAL_COUNT_KEY, initialCount);
@@ -206,5 +212,6 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
      */
     private void hideError() {
         b.data.setError(null);
+        b.initialCounterEditText.setError(null);
     }
 }
