@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private void getInitialCount() {
         Bundle bundle = getIntent().getExtras();
 
+        if (bundle == null)
+            return;
+
         // Getting all the data which is come from the starter activity
         qty = bundle.getInt(Constants.INITIAL_COUNT_KEY, 0);
         minVal = bundle.getInt(Constants.MINIMUM_VALUE, Integer.MIN_VALUE);
