@@ -32,15 +32,15 @@ public class MainActivity extends AppCompatActivity {
         setupEventHandlers();
         getInitialCount();
 
-        // Restore on saved instances
-        if (savedInstanceState != null) {
-            b.qty.setText(savedInstanceState.getInt(Constants.COUNT, -3) + "");
-        } else {
-            // Create preference reference
-
-            SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-            b.qty.setText(preferences.getInt(Constants.COUNT, -3) + "");
-        }
+//        // Restore on saved instances
+//        if (savedInstanceState != null) {
+//            b.qty.setText(savedInstanceState.getInt(Constants.COUNT, -3) + "");
+//        } else {
+//            // Create preference reference
+//
+//            SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+//            b.qty.setText(preferences.getInt(Constants.COUNT, -3) + "");
+//        }
     }
 
     /**
@@ -127,31 +127,31 @@ public class MainActivity extends AppCompatActivity {
     // Instance State
 
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        // Create preference reference
-
-        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-        preferences.edit()
-                .putInt(Constants.COUNT, qty)
-                .apply();
-
-        SharedPreferences.OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
-            }
-        };
-
-        preferences.registerOnSharedPreferenceChangeListener(listener);
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putInt(Constants.COUNT, qty);
-    }
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//
+//        // Create preference reference
+//
+//        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+//        preferences.edit()
+//                .putInt(Constants.COUNT, qty)
+//                .apply();
+//
+//        SharedPreferences.OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+//            @Override
+//            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+//
+//            }
+//        };
+//
+//        preferences.registerOnSharedPreferenceChangeListener(listener);
+//    }
+//
+//    @Override
+//    public void onSaveInstanceState(@NonNull Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//
+//        outState.putInt(Constants.COUNT, qty);
+//    }
 }
