@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.streamliners.counterapp.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class CounterActivity extends AppCompatActivity {
     private int qty = 0;
     private ActivityMainBinding b;
     private int minVal, maxVal;
@@ -32,15 +32,12 @@ public class MainActivity extends AppCompatActivity {
         setupEventHandlers();
         getInitialCount();
 
-//        // Restore on saved instances
-//        if (savedInstanceState != null) {
-//            b.qty.setText(savedInstanceState.getInt(Constants.COUNT, -3) + "");
-//        } else {
-//            // Create preference reference
-//
-//            SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-//            b.qty.setText(preferences.getInt(Constants.COUNT, -3) + "");
-//        }
+        // Restore on saved instances
+        if (savedInstanceState != null) {
+            qty = savedInstanceState.getInt(Constants.COUNT, 0);
+            // Update the UI
+            b.qty.setText(String.valueOf(qty));
+        }
     }
 
     /**
@@ -126,32 +123,10 @@ public class MainActivity extends AppCompatActivity {
 
     // Instance State
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
 
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//
-//        // Create preference reference
-//
-//        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-//        preferences.edit()
-//                .putInt(Constants.COUNT, qty)
-//                .apply();
-//
-//        SharedPreferences.OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-//            @Override
-//            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-//
-//            }
-//        };
-//
-//        preferences.registerOnSharedPreferenceChangeListener(listener);
-//    }
-//
-//    @Override
-//    public void onSaveInstanceState(@NonNull Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//
-//        outState.putInt(Constants.COUNT, qty);
-//    }
+        outState.putInt(Constants.COUNT, qty);
+    }
 }
