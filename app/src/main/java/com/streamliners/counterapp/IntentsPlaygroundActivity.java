@@ -4,7 +4,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.InetAddresses;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -71,7 +70,7 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
      * @param view view of the button pressed
      */
     public void openMainActivity(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, CounterActivity.class);
         startActivity(intent);
     }
 
@@ -131,7 +130,7 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
         bundle.putInt(Constants.MINIMUM_VALUE, -100);
         bundle.putInt(Constants.MAXIMUM_VALUE, 100);
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, CounterActivity.class);
         intent.putExtras(bundle);
 
         startActivityForResult(intent, REQUEST_COUNT);
