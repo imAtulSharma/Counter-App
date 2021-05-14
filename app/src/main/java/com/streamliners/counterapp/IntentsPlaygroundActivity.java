@@ -1,8 +1,5 @@
 package com.streamliners.counterapp;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,11 +8,18 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.streamliners.counterapp.databinding.ActivityIntentsPlaygroundBinding;
 
 public class IntentsPlaygroundActivity extends AppCompatActivity {
     private static final int REQUEST_COUNT = 0;
     ActivityIntentsPlaygroundBinding b;
+
+    boolean resultReceived = false;
+    int finalCount = 0;
 
     // Initial setup
 
@@ -24,7 +28,7 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setupLayout();
-
+        restoreDataFromSavedInstances(savedInstanceState);
         setupHideErrorForEditText();
     }
 
@@ -42,7 +46,7 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
      * Text watcher which gives callback when the text in the text fields changes
      */
     private void setupHideErrorForEditText() {
-        TextWatcher myTextwatcher = new TextWatcher() {
+        TextWatcher myTextWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -59,8 +63,8 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
             }
         };
 
-        b.data.getEditText().addTextChangedListener(myTextwatcher);
-        b.initialCounterEditText.getEditText().addTextChangedListener(myTextwatcher);
+        b.data.getEditText().addTextChangedListener(myTextWatcher);
+        b.initialCounterEditText.getEditText().addTextChangedListener(myTextWatcher);
     }
 
     // Event Handlers
@@ -143,9 +147,12 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
         // Checking the incoming data
         if (requestCode == REQUEST_COUNT && resultCode == RESULT_OK) {
             int count = data.getIntExtra(Constants.FINAL_COUNT, Integer.MIN_VALUE);
+            // set the final count
+            resultReceived = true;
+            finalCount = count;
 
-            b.result.setText("Final count received: " + count);
-            b.result.setVisibility(View.VISIBLE);
+            // show the result to the user
+            setResultInTextView(count);
         }
     }
 
@@ -206,5 +213,44 @@ public class IntentsPlaygroundActivity extends AppCompatActivity {
     private void hideError() {
         b.data.setError(null);
         b.initialCounterEditText.setError(null);
+    }
+
+    /**
+     * to set the result in the text view
+     * @param count final count (result) to be set
+     */
+    private void setResultInTextView(int count) {
+        b.result.setText("Final count received: " + count);
+        b.result.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * to restore the data and update the UI
+     * @param savedInstanceState Bundle of the data
+     */
+    private void restoreDataFromSavedInstances(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            // set the result received value
+            resultReceived = savedInstanceState.getBoolean("ResultReceived", false);
+
+            if (resultReceived) {
+                // set the final count
+                finalCount = savedInstanceState.getInt("FinalCount");
+
+                // display the final count (result)
+                setResultInTextView(finalCount);
+            }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean("ResultReceived", resultReceived);
+
+        // check for the result view
+        if (resultReceived)
+            outState.putInt("FinalCount", finalCount);
     }
 }
